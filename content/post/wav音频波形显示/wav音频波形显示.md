@@ -42,7 +42,16 @@ if (audioFormat != 1 && audioFormat != 65524) return null;
 	Structure of the 'JUNK' chunk
 	To align RIFF chunks to certain boundaries (i.e. 2048bytes for CD-ROMs) the RIFF specification 	includes a JUNK chunk. Its contents are to be skipped when reading. When writing RIFFs, JUNK 	chunks should not have odd number as Size.
 
-wav都是按照这种块结构排列的，甚至块内支持不同的编码格式，可以想象wav的设计很大程度是为了兼容和通用性。这个垃圾块单纯只是为了占位，很难想象全世界光这个垃圾块能占走多少资源。知道问题就比较好处理了。
+wav都是按照这种块结构排列的，基本结构都是
+
+```c#
+ 标识符-size-data
+ riff -50 - data
+```
+
+同样chunk之间还支持嵌套，有点像网络协议的格式。
+
+甚至块内支持不同的编码格式，可以想象wav的设计很大程度是为了兼容和通用性。这个垃圾块单纯只是为了占位，很难想象全世界光这个垃圾块能占走多少资源。知道问题就比较好处理了。
 
 ## 解决
 
@@ -62,5 +71,10 @@ wav都是按照这种块结构排列的，甚至块内支持不同的编码格�
 
 [wav format](https://tech.ebu.ch/docs/tech/tech3306v1_0.pdf)
 
+---
+辣椒酱
 
 2021.10.28
+
+更多内容在[博客](http://www.lajiaoyuzhou.com/)
+
