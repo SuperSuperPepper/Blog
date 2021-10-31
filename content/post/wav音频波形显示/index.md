@@ -6,13 +6,18 @@ draft: true
 ---
 # 背景提要
 
-由于需要画wav文件的波形图，所以就需要拿到wav的波形数据。Unity内部是有从audioclip拿数据画波形的方法的，但是奈何在引擎内部，涉及到C++层，使用多有不便。自己画倒也简单，先拿到采样数据，然后画到texture上即可。所以主要是两个函数。
+由于需要画wav文件的波形图，所以就需要拿到wav的波形数据,由于音频并非是在unity工程内的，所以数据源并非是导入后的AudioClip。Unity内部是有从audioclip拿数据画波形的方法的，但是奈何在引擎内部，涉及到C++层，使用多有不便。自己画倒也简单，先拿到采样数据，然后按数据量将数值画到texture上即可。所以主要是两个步骤。
 
 + 获取wav采样数据
 
 + draw
 
+
+整理数据转换流程就是 wav->bytes->audioclip->sampledata->textrue
+
 wav的文件解析是件繁琐的事情，于是就上GitHub上找了个轻量的[库](https://github.com/deadlyfingers/UnityWav)，毕竟这种小需求，不想把整个NAudio导入。可以将wav转audioclip。然后在官方[论坛](https://forum.unity.com/threads/how-to-create-waveform-texture-from-audioclip.631480/)里，找到绘制audioclip的方法，很轻松啊，整合一下就可以了，不愧是大自然的搬运工。
+
+整体流程就是
 
 ## 问题出现
 
@@ -25,11 +30,11 @@ if (audioFormat != 1 && audioFormat != 65524) return null;
 
 发现有些音频的format不为1，第一直觉认为是其他格式没被支持。通过对比二进制文件才发现不同wav文件的格式竟然就不一样。
 
-![](E:\MProject\Blog\content\post\wav音频波形显示\Snipaste_2021-10-28_18-11-55.png)
+![第一种](Snipaste_2021-10-28_18-11-55.png)
 
 
 
-![](Snipaste_2021-10-28_18-11-43.png)
+![第二种](Snipaste_2021-10-28_18-11-43.png)
 
 按我找的格式图，完全不一样啊 ，这个JUNK是什么呢？
 
@@ -55,9 +60,9 @@ wav都是按照这种块结构排列的，基本结构都是
 
 ## 解决
 
-这就只需要修改解析模块的代码，让其支持到不同的chunk就可以。[github](https://github.com/SuperSuperPepper/UnityWav)并且在操作上，可以省略转换wav到audioclip这一步。能稍微的优化一些。并在库里扩展了只获取采样数据的方法。
+这就只需要修改解析模块的代码，让其支持到不同的chunk就可以。代码在[github](https://github.com/SuperSuperPepper/UnityWav)。我这里只关注了绘制所需要的datachunk,并且在操作上，可以省略转换wav到audioclip这一步。能稍微的优化一些。并在库里扩展了只获取采样数据的方法。
 
-
+现在的流程是 wav->bytes->sampledata->textrue
 
 ## 参考：
 
@@ -77,4 +82,3 @@ wav都是按照这种块结构排列的，基本结构都是
 2021.10.28
 
 更多内容在[博客](http://www.lajiaoyuzhou.com/)
-
