@@ -1,8 +1,11 @@
 ---
 title: "Wav 音频波形显示"
+description: "将wav文件数据显示为波形图的流程"
 date: 2021-10-28T18:10:46+08:00
-description: 网站的起源
-draft: true
+image: "wave.png"
+draft: false
+categories:
+    - Unity
 ---
 # 背景提要
 
