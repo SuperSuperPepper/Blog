@@ -1,6 +1,6 @@
 ---
 title: "Unity波形绘制从CPU-GPU"
-date: 2022-01-07T18:10:46+08:00
+date: 2022-01-07
 description: 波形绘制
 image: "wave.png"
 draft: false
