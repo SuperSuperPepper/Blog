@@ -2,7 +2,7 @@
 title: "Unity波形绘制从CPU-GPU"
 date: 2022-01-07T18:10:46+08:00
 description: 波形绘制
-image:"wave.png"
+image: "wave.png"
 draft: false
 categories:
     - Unity
